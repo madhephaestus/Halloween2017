@@ -1,3 +1,4 @@
+double skinThickness = 10
 File yodaFile = ScriptingEngine.fileFromGit(
 	"https://github.com/madhephaestus/Halloween2017.git",
 	"Yoda-SuperLite.stl");
@@ -17,7 +18,7 @@ CSG moldCore =new Cylinder(100,100,130,(int)30).toCSG() // a one line Cylinder
 			.difference(yoda)
 
 ArrayList<CSG> moldParts =[]
-
+BowlerStudioController.setCsg([yoda])
 for (int i=0;i<360;i+=90){
 	CSG slice =moldCore.intersect(
 				cutter
@@ -36,7 +37,18 @@ for (int i=0;i<360;i+=90){
 	println "Making " +fn
 }
 
-
-
+CSG printNozzel = new Cube(skinThickness).toCSG();
+// Access the raw minkowski intermediates
+/*
+ArrayList<CSG> mikObjs = yoda.minkowski(printNozzel);
+CSG core = yoda
+int i=0;
+for(CSG bit:mikObjs){
+	core = core.difference(bit)
+	BowlerStudioController.setCsg([core,bit.setColor(javafx.scene.paint.Color.CYAN)])
+	println "Making core part "+i+" of "+mikObjs.size()
+	
+}
+*/
 
 return moldParts
