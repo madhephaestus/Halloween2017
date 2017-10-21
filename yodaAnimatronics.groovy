@@ -8,7 +8,7 @@ LengthParameter thickness 		= new LengthParameter(	"Material Thickness",
 												3.2,
 												[10,1])
 LengthParameter headDiameter 		= new LengthParameter(	"Head Dimeter",
-												80,
+												90,
 												[200,140])
 LengthParameter snoutLen 		= new LengthParameter("Snout Length",65,[headDiameter.getMM()*2,headDiameter.getMM()/2])
 LengthParameter jawHeight 		= new LengthParameter("Jaw Height",20,[200,10])
@@ -20,7 +20,7 @@ LengthParameter nutThick 		= new LengthParameter("Nut Thickness",2.4,[10,3])
 LengthParameter upperHeadDiam 	= new LengthParameter("Upper Head Height",50,[300,0])
 LengthParameter leyeDiam 		= new LengthParameter("Left Eye Diameter",27,[headDiameter.getMM()/2,56])
 LengthParameter reyeDiam 		= new LengthParameter("Right Eye Diameter",27,[headDiameter.getMM()/2,56])
-LengthParameter eyeCenter 		= new LengthParameter("Eye Center Distance",55,[headDiameter.getMM(),leyeDiam.getMM()*1.5])
+LengthParameter eyeCenter 		= new LengthParameter("Eye Center Distance",53,[headDiameter.getMM(),leyeDiam.getMM()*1.5])
 LengthParameter ballJointPin		= new LengthParameter("Ball Joint Pin Size",8,[50,8])
 LengthParameter centerOfBall 		= new LengthParameter("Center Of Ball",18.5,[50,8])
 LengthParameter printerOffset		= new LengthParameter("printerOffset",0.5,[2,0.001])
@@ -68,7 +68,7 @@ CSG yoda  = Vitamins.get(yodaFile)
 					.toZMin()
 				)
 			.movez(-82+jawHeight.getMM())
-			.movex(-(65) + headDiameter.getMM()/2)
+			.movex(-(63) + headDiameter.getMM()/2)
 headParts.add(yoda )
 
 return headParts
