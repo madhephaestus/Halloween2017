@@ -22,7 +22,7 @@ BowlerStudioController.setCsg([yoda])
 def angles = [50,90,58,60,60]
 
 double total =0;
-double radius =135
+double radius =130
 double height = 130*1.75
 
 
@@ -57,6 +57,10 @@ for (int i=0;i<angles.size()+1;i++){
         .difference(regestration.rotz(-angle))
         .rotz(-total)
 	   .difference(yoda)
+	   .rotz(total)
+	   .movey(5)
+	   .movex(5)
+	   .rotz(-total)
       /*
 	CSG slice =moldCore.intersect(
 				cutter
