@@ -9,7 +9,7 @@ println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
 
 CSG cutter = new Cube(250).toCSG()
 				.toZMin()
-yoda=yoda
+yoda=yoda .scale(1.75)
 		.intersect(cutter
 				.movez(20))
 		.toZMin()
@@ -22,8 +22,8 @@ BowlerStudioController.setCsg([yoda])
 def angles = [50,90,58,60,60]
 
 double total =0;
-double radius = 90
-double height = 130
+double radius = 90*1.75
+double height = 130*1.75
 
 
 CSG moldMoldCoreBit =new Cylinder(radius,radius,height,(int)30).toCSG() // a one line Cylinder

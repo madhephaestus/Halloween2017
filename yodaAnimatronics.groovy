@@ -8,7 +8,7 @@ LengthParameter thickness 		= new LengthParameter(	"Material Thickness",
 												3.2,
 												[10,1])
 LengthParameter headDiameter 		= new LengthParameter(	"Head Dimeter",
-												75,
+												65,
 												[200,140])
 LengthParameter snoutLen 		= new LengthParameter("Snout Length",50,[headDiameter.getMM()*2,headDiameter.getMM()/2])
 LengthParameter jawHeight 		= new LengthParameter("Jaw Height",15,[200,10])
@@ -24,7 +24,7 @@ LengthParameter eyeCenter 		= new LengthParameter("Eye Center Distance",30,[head
 LengthParameter ballJointPin		= new LengthParameter("Ball Joint Pin Size",8,[50,8])
 LengthParameter centerOfBall 		= new LengthParameter("Center Of Ball",18.5,[50,8])
 LengthParameter printerOffset		= new LengthParameter("printerOffset",0.5,[2,0.001])
-LengthParameter eyemechRadius		= new LengthParameter("Eye Mech Linkage",10,[20,5])
+LengthParameter eyemechRadius		= new LengthParameter("Eye Mech Linkage",8,[20,5])
 LengthParameter eyemechWheelHoleDiam	= new LengthParameter("Eye Mech Wheel Center Hole Diam",7.25,[8,3])
 LengthParameter wireDiam			= new LengthParameter("Connection Wire Diameter",1.6,[boltDiam.getMM(),1])
 StringParameter servoSizeParam 			= new StringParameter("hobbyServo Default","DHV56mg_sub_Micro",Vitamins.listVitaminSizes("hobbyServo"))
@@ -61,11 +61,13 @@ CSG cutter = new Cube(headDiameter.getMM()*4).toCSG()
 // Load the .CSG from the disk and cache it in memory
 CSG yoda  = Vitamins.get(yodaFile)
 			.rotz(-55)
+			.scale(1.75)
 			.difference(cutter
 					.toYMin()
 					.toZMin()
 				)
 			.movez(-38+jawHeight.getMM())
+			.movex(-(75/2) + headDiameter.getMM()/2)
 headParts.add(yoda )
 
 return headParts
