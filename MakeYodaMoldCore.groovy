@@ -36,7 +36,8 @@ for (int i=0;i<angles.size()+1;i++){
 		angle =360-total
 	}
 
-	CSG regestration = new Icosahedron(skinThickness).toCSG();
+	CSG regestration = new Icosahedron(skinThickness).toCSG()
+					.scaley(0.5)
 
 	regestration=regestration
 				.movez((skinThickness*2))
@@ -76,7 +77,7 @@ for (int i=0;i<angles.size()+1;i++){
 	}
 	FileUtil.write(Paths.get(stl.getAbsoluteFile().toString()),
 	slice.toStlString());
-	
+	BowlerStudioController.setCsg(moldParts)
 	println "Making " +fn
 }
 
