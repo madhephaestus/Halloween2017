@@ -9,7 +9,7 @@ println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
 
 CSG cutter = new Cube(250).toCSG()
 				.toZMin()
-yoda=yoda .scale(1.75)
+yoda=yoda .scale(1.6)
 		.intersect(cutter
 				.movez(20))
 		.toZMin()
@@ -22,7 +22,7 @@ BowlerStudioController.setCsg([yoda])
 def angles = [50,90,58,60,60]
 
 double total =0;
-double radius = 90*1.75
+double radius =135
 double height = 130*1.75
 
 
