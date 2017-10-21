@@ -9,7 +9,11 @@ println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
 
 CSG cutter = new Cube(250).toCSG()
 				.toZMin()
-yoda=yoda.scale(scale)
+yoda=yoda
+		.scale(scale)
+FileUtil.write(Paths.get(yodaFile.getAbsoluteFile().toString()),yoda.toStlString());
+
+yoda=yoda
 		.intersect(cutter
 				.movez(20))
 		.toZMin()
@@ -27,7 +31,7 @@ for (int i=0;i<360;i+=90){
 					.rotz(i) 
 					)
 	moldParts.add(slice)
-	String fn = "C:\\Users\\Technocopia PC 01\\Desktop\\MoldPart_"+i+"_.stl"
+	String fn = System.getProperty("user.home") + "/Desktop/MoldPart_"+i+"_.stl"
 	File stl = new File(fn)
 	if(!stl.exists()){
 		stl.createNewFile()
@@ -39,8 +43,8 @@ for (int i=0;i<360;i+=90){
 
 CSG printNozzel = new Cube(skinThickness).toCSG();
 // Access the raw minkowski intermediates
-/*
-ArrayList<CSG> mikObjs = yoda.minkowski(printNozzel);
+
+ArrayList<CSG> mikObjs = yoda.hull().minkowski(printNozzel);
 CSG core = yoda
 int i=0;
 for(CSG bit:mikObjs){
@@ -49,6 +53,6 @@ for(CSG bit:mikObjs){
 	println "Making core part "+i+" of "+mikObjs.size()
 	
 }
-*/
+
 
 return moldParts
