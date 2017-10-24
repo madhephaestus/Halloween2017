@@ -16,6 +16,7 @@ yoda=yoda .scale(1.6)
 
 
 
+return yoda
 
 ArrayList<CSG> moldParts =[]
 BowlerStudioController.setCsg([yoda])
