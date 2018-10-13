@@ -27,13 +27,7 @@ yoda=yoda .scale(1.6)
 				.movez(20))
 		.toZMin()
 		
-CSG printNozzel =  new Cylinder(skinThickness/2,skinThickness/2,skinThickness,(int)8).toCSG()
-def parts = minkowski(yoda,printNozzel)
 
-for(def p:parts){
-	yoda=yoda.difference(p)
-	BowlerStudioController.setCsg([yoda])
-}
 
 return yoda
 
