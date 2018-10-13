@@ -1,7 +1,20 @@
+
+public ArrayList<CSG> minkowski(CSG core, CSG travelingShape){
+	def allParts = []
+	for(Polygon p: core.getPolygons()){
+		def corners = []
+		for(Vertex v:p.vertices){
+				corners.add(travelingShape.move(v));
+		}
+		allParts.add(CSG.hullAll(corners))
+	}
+	return  allParts;
+}
+
 double skinThickness = 5
 File yodaFile = ScriptingEngine.fileFromGit(
 	"https://github.com/madhephaestus/Halloween2017.git",
-	"Yoda-SuperLite.stl");
+	"yoda-1kfaces.stl");
 // Load the .CSG from the disk and cache it in memory
 CSG yoda  = Vitamins.get(yodaFile);
 
@@ -13,10 +26,17 @@ yoda=yoda .scale(1.6)
 		.intersect(cutter
 				.movez(20))
 		.toZMin()
+		
+CSG printNozzel =  new Cylinder(skinThickness/2,skinThickness/2,skinThickness,(int)8).toCSG()
+def parts = minkowski(yoda,printNozzel)
 
-
+for(def p:parts){
+	yoda=yoda.difference(p)
+	BowlerStudioController.setCsg([yoda])
+}
 
 return yoda
+
 
 ArrayList<CSG> moldParts =[]
 BowlerStudioController.setCsg([yoda])
