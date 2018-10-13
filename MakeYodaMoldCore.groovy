@@ -29,12 +29,12 @@ yoda=yoda .scale(1.6)
 		
 
 
-return yoda
+//return yoda
 
 
 ArrayList<CSG> moldParts =[]
 BowlerStudioController.setCsg([yoda])
-def angles = [50,90,58,60,60]
+def angles = [50,90,58,160]
 
 double total =0;
 double radius =130
@@ -65,6 +65,9 @@ for (int i=0;i<angles.size()+1;i++){
 	CSG slice = Extrude.points(new Vector3d(0, 0, height),// This is the  extrusion depth
                 new Vector3d(0,0),// All values after this are the points in the polygon
                 new Vector3d(x,y),// Bottom right corner
+                new Vector3d(Math.cos(Math.toRadians(angle/2))*radius*4,
+                Math.sin(Math.toRadians(angle/2))*radius*4),// Bottom right corner
+                
                 new Vector3d(radius,0),// upper right corner
         )
         .intersect(moldMoldCoreBit)
