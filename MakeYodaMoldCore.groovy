@@ -16,7 +16,8 @@ File yodaFile = ScriptingEngine.fileFromGit(
 	"https://github.com/madhephaestus/Halloween2017.git",
 	"yoda-1kfaces.stl");
 // Load the .CSG from the disk and cache it in memory
-CSG yoda  = Vitamins.get(yodaFile);
+CSG yoda  = Vitamins.get(yodaFile)
+			.rotz(47)
 
 println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
 
@@ -34,7 +35,7 @@ yoda=yoda .scale(1.6)
 
 ArrayList<CSG> moldParts =[]
 BowlerStudioController.setCsg([yoda])
-def angles = [50,90,58,160]
+def angles = [90,64]
 
 double total =0;
 double radius =130
@@ -96,11 +97,12 @@ for (int i=0;i<angles.size()+1;i++){
 	File stl = new File(fn)
 	if(!stl.exists()){
 		stl.createNewFile()
+		FileUtil.write(Paths.get(stl.getAbsoluteFile().toString()),
+		slice.toStlString());
+		BowlerStudioController.setCsg(moldParts)
+		println "Making " +fn
 	}
-	FileUtil.write(Paths.get(stl.getAbsoluteFile().toString()),
-	slice.toStlString());
-	BowlerStudioController.setCsg(moldParts)
-	println "Making " +fn
+
 }
 
 //CSG printNozzel = new Cube(skinThickness).toCSG();
