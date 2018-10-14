@@ -35,7 +35,8 @@ yoda=yoda .scale(1.6)
 
 ArrayList<CSG> moldParts =[]
 BowlerStudioController.setCsg([yoda])
-def angles = [90,64]
+double ear =35
+def angles = [90,64,ear,360-(90+64+ear)-ear]
 
 double total =0;
 double radius =130
