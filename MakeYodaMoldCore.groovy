@@ -43,7 +43,7 @@ double radius =130
 double height = 130*1.75
 
 
-CSG moldMoldCoreBit =new Cylinder(radius,radius,height,(int)30).toCSG() // a one line Cylinder
+CSG moldMoldCoreBit =new Cube(radius*2,radius*2,height).toCSG().toZMin() // a one line Cylinder
 
 for (int i=0;i<angles.size()+1;i++){
 	double angle=0;
@@ -62,22 +62,22 @@ for (int i=0;i<angles.size()+1;i++){
 				.movez(height-(skinThickness*2)))
 				.movex(radius-(skinThickness*2))
 	
-	double x=Math.cos(Math.toRadians(angle))*radius*4
-	double y=Math.sin(Math.toRadians(angle))*radius*4
+	double x=Math.cos(Math.toRadians(angle))*radius*4*Math.sqrt(2)
+	double y=Math.sin(Math.toRadians(angle))*radius*4*Math.sqrt(2)
 	CSG slice = Extrude.points(new Vector3d(0, 0, height),// This is the  extrusion depth
                 new Vector3d(0,0),// All values after this are the points in the polygon
                 new Vector3d(x,y),// Bottom right corner
-                new Vector3d(Math.cos(Math.toRadians(2*angle/3))*radius*4,
-                Math.sin(Math.toRadians(2*angle/3))*radius*4),// Bottom right corner
-                new Vector3d(Math.cos(Math.toRadians(1*angle/3))*radius*4,
-                Math.sin(Math.toRadians(1*angle/3))*radius*4),// Bottom right corner
+                new Vector3d(Math.cos(Math.toRadians(2*angle/3))*radius*4*Math.sqrt(2),
+                Math.sin(Math.toRadians(2*angle/3))*radius*4*Math.sqrt(2)),// Bottom right corner
+                new Vector3d(Math.cos(Math.toRadians(1*angle/3))*radius*4*Math.sqrt(2),
+                Math.sin(Math.toRadians(1*angle/3))*radius*4*Math.sqrt(2)),// Bottom right corner
                 new Vector3d(radius,0),// upper right corner
         )
-        .intersect(moldMoldCoreBit)
         .union(regestration)
         .difference(regestration.rotz(-angle))
         .rotz(-total)
 	   .difference(yoda)
+        .intersect(moldMoldCoreBit)
 	   .rotz(total)
 	   .movey(5)
 	   .movex(5)
