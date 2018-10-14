@@ -10,6 +10,13 @@ public ArrayList<CSG> minkowski(CSG core, CSG travelingShape){
 	}
 	return  allParts;
 }
+def eyeDiam 		= new LengthParameter("Eye Diameter",50,[60,38])
+def eyeCenter 		= new LengthParameter("Eye Center Distance",eyeDiam.getMM()+5,[100,eyeDiam.getMM()])
+def noseLength		= new LengthParameter("noseLength",5,[200,001])
+def jawLength		= new LengthParameter("jawLength",40,[200,001])
+def noseDiameter 	= new LengthParameter("Nose Diameter",eyeDiam.getMM()*2,[eyeDiam.getMM()*3,10])
+double jawThickness = 6 
+
 
 double skinThickness = 5
 File yodaFile = ScriptingEngine.fileFromGit(
@@ -28,9 +35,14 @@ yoda=yoda .scale(1.6)
 				.movez(20))
 		.toZMin()
 		
+CSG eye = new Sphere(eyeDiam.getMM()).toCSG()
 
+def core = CSG.unionAll([
+		eye,
+		eye.movey(eyeCenter.getMM())
+])
 
-//return yoda
+return [yoda,core]
 
 
 ArrayList<CSG> moldParts =[]
