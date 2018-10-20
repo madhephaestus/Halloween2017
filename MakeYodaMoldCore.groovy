@@ -1,4 +1,6 @@
-
+if (args==null){
+	CSGDatabase.clear()
+}
 public ArrayList<CSG> minkowski(CSG core, CSG travelingShape){
 	def allParts = []
 	for(Polygon p: core.getPolygons()){
@@ -13,20 +15,19 @@ public ArrayList<CSG> minkowski(CSG core, CSG travelingShape){
 def eyeDiam 		= new LengthParameter("Eye Diameter",50,[60,38])
 def eyeCenter 		= new LengthParameter("Eye Center Distance",eyeDiam.getMM()+5,[100,eyeDiam.getMM()])
 def noseLength		= new LengthParameter("noseLength",5,[200,001])
-def jawLength		= new LengthParameter("jawLength",40,[200,001])
+def jawLength		= new LengthParameter("jawLength",70,[200,001])
 def noseDiameter 	= new LengthParameter("Nose Diameter",eyeDiam.getMM()*2,[eyeDiam.getMM()*3,10])
 double jawThickness = 6 
 
-
+double moveDownYoda = 45
 double skinThickness = 5
 File yodaFile = ScriptingEngine.fileFromGit(
 	"https://github.com/madhephaestus/Halloween2017.git",
 	"yoda-1kfaces.stl");
 // Load the .CSG from the disk and cache it in memory
 CSG yoda  = Vitamins.get(yodaFile)
-			.rotz(47)
+			.rotz(34)
 
-println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
 
 CSG cutter = new Cube(250).toCSG()
 				.toZMin()
@@ -34,13 +35,42 @@ yoda=yoda .scale(1.6)
 		.intersect(cutter
 				.movez(20))
 		.toZMin()
-		
-CSG eye = new Sphere(eyeDiam.getMM()).toCSG()
+		.movez(-moveDownYoda)
+		.movey(35)
+		 .scale(2.7)
+		 .movey(-5)
 
+println "Total X dimention = " + (-yoda.getMinX()+yoda.getMaxX())
+		
+CSG eye = new Sphere(eyeDiam.getMM()/2).toCSG()
+CSG jawBlank = new Cylinder(noseDiameter.getMM()/2,jawThickness).toCSG()	
+			.movez(-jawLength.getMM())
+			.movey(eyeCenter.getMM()/2)
+			.toXMax()
+			.movex(noseLength.getMM()+eyeDiam.getMM()/3)
+def mechBody = new Cube(noseDiameter.getMM()-eyeDiam.getMM()/3,
+				eyeCenter.getMM()+eyeDiam.getMM()-20,
+				jawLength.getMM()+eyeDiam.getMM()/2)
+				.toCSG()
+				.toXMax()
+				.toYMin()
+				.toZMin()
+				.movez(-jawLength.getMM())
+				.movey(-eyeDiam.getMM()/2+10)
+				//.movex(-jawThickness)
+			
 def core = CSG.unionAll([
 		eye,
-		eye.movey(eyeCenter.getMM())
+		eye.movey(eyeCenter.getMM()),
+		jawBlank,
+		mechBody
 ])
+.rotz(90)
+.movex(-eyeCenter.getMM()/2)
+
+def box = yoda.getBoundingBox()
+
+yoda=yoda.difference(box.toXMin())
 
 return [yoda,core]
 
